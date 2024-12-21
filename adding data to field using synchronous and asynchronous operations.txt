@@ -1,0 +1,17 @@
+function onLoad() {
+  
+  if(g_form.isNewRecord()) {
+	 g_form.setValue('caller_id' , g_user.userID);
+
+	//var calMail = g_form.getReference('caller_id').email;
+    //var calLocat = g_form.getReference('caller_id').location;
+    //var calDept = g_form.getReference('caller_id').department;
+    var cal = g_form.getReference('caller_id',callback)
+
+	function callback(cal){
+		g_form.setValue('u_email',cal.email);
+		g_form.setValue('u_location',cal.location);
+		g_form.setValue('u_department',cal.department);
+    } 
+  } 
+}
