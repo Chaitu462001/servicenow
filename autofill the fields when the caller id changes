@@ -1,0 +1,16 @@
+function onChange(control,oldValue,newValue,isLoading,isTemplate){
+ if(newValue === ''){
+  g_form.clearValue('field_name');
+  g_form.clearValue('field_name');
+  return;
+}
+
+var chay = g_form.getReference('caller_id',callback);
+function getCallerDetails(chay){
+  g_form.setValue('field_name',chay.fieldname);
+  g_form.setValue('field_name',chay.fieldname);
+}
+}
+
+
+
