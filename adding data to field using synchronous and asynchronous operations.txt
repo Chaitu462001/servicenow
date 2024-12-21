@@ -3,10 +3,10 @@ function onLoad() {
   if(g_form.isNewRecord()) {
 	 g_form.setValue('caller_id' , g_user.userID);
 
-	//var calMail = g_form.getReference('caller_id').email;
+	//var calMail = g_form.getReference('caller_id').email; //synchronous operation
     //var calLocat = g_form.getReference('caller_id').location;
     //var calDept = g_form.getReference('caller_id').department;
-    var cal = g_form.getReference('caller_id',callback)
+    var cal = g_form.getReference('caller_id',callback) //asynchronous operation
 
 	function callback(cal){
 		g_form.setValue('u_email',cal.email);
