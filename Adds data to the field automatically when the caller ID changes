@@ -1,0 +1,10 @@
+function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+   
+    var chay = g_form.getReference('caller_id', getCallerDetails);
+
+    function getCallerDetails(chay) {
+        g_form.setValue('u_email', chay.email);
+        g_form.setValue('u_location', chay.location);
+        g_form.setValue('u_department', chay.department);
+    }
+}
