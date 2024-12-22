@@ -1,0 +1,8 @@
+var chay = new GlideRecord('table name');
+chay.addQuery('field_name', 'value');
+chay.query();
+
+if (chay.next()) {
+    chay.deleteRecord();
+}
+	
