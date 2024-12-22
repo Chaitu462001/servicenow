@@ -1,8 +1,4 @@
-var chay = new GlideRecord('sys_user');
+var chay = new GlideRecord('table name ');
 chay.initialize();
-chay.setValue('email','suryachaitanya46@gmail.com');
-chay.setValue('user_name','suryams46');
-chay.setValue('first_name','Surya');
-chay.setValue('last_name','Chaitanya');
-chay.setValue('mobile_phone','9393366766');
+chay.setValue('field_name','value');
 chay.insert();
