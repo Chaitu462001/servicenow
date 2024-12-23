@@ -1,0 +1,22 @@
+function onSubmit() {
+    var sta = g_form.getValue('field_name');
+    var cat = g_form.getValue('field_name');
+    var scat = g_form.getValue('field_name');
+
+    if (cat == '' || scat == '') {
+
+        if (cat == '' && scat == '') {
+            g_form.showFieldMsg('field_name', 'messaged to be dispalyed ', 'type of issue');
+            g_form.showFieldMsg('field_name', 'messaged to be dispalyed', 'type of issue');
+        } else if (cat == '' && scat != '') {
+            g_form.showFieldMsg('field_name','messaged to be dispalyed','type of issue');
+            }
+            else if (cat != '' && scat == '') {
+                g_form.showFieldMsg('field_name', 'messaged to be dispalyed','type of issue');
+                }
+
+				return false;
+
+            }
+
+        }
