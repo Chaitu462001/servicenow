@@ -1,0 +1,7 @@
+function onSubmit() {
+    var attachmentSection = document.getElementById('header_attachment_list_label'); 
+
+    if (!attachmentSection || attachmentSection.style.display === 'none') {
+        g_form.addErrorMessage('You must attach the completed form before submitting this request.');
+        return false; 
+}
