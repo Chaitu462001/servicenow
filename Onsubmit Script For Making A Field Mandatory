@@ -1,0 +1,12 @@
+function onSubmit() {
+    var isVip = g_form.getValue('u_vip');
+    var isCont = g_form.getValue('u_contractor');
+
+    if (isVip != 'true' || isCont != 'true') {
+		g_form.addErrorMessage('Caller is not a VIP and Contractor')
+        alert('You can only fill the form unless he is a VIP and contractor');
+        return false;
+    }
+    return true;
+
+}
