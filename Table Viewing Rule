@@ -1,0 +1,28 @@
+(function executeRule(current, gForm, gS) {
+    // Get the selected value of the Country field
+    var selectedCountry = gForm.getValue('country'); // Replace 'country' with your field's name
+
+    // Define behavior based on the selected country
+    if (selectedCountry === 'USA') {
+        // Show and make 'state' mandatory for the USA
+        gForm.setMandatory('state', true);
+        gForm.setVisible('state', true);
+
+        // Hide and make 'postal_code' optional for the USA
+        gForm.setMandatory('postal_code', false);
+        gForm.setVisible('postal_code', false);
+    } else if (selectedCountry === 'India') {
+        // Show and make 'postal_code' mandatory for India
+        gForm.setMandatory('postal_code', true);
+        gForm.setVisible('postal_code', true);
+
+        // Hide the 'state' field for India
+        gForm.setVisible('state', false);
+    } else {
+        // Default behavior for other countries
+        gForm.setVisible('state', false);
+        gForm.setVisible('postal_code', false);
+        gForm.setMandatory('state', false);
+        gForm.setMandatory('postal_code', false);
+    }
+})(current, gForm, gS);
