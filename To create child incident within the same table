@@ -1,0 +1,22 @@
+var ms = new GlideRecord('incident'); // var abc = new Gliderecord('table_name)
+ms.initialize();
+
+ms.category = current.category; // ms.field_name = current.field_name;
+ms.subcategory = current.subcategory;
+ms.caller_id = current.caller_id;
+ms.u_vip = current.u_vip;
+ms.u_contractor = current.u_contractor;
+ms.impact = current.impact;
+ms.urgency = current.urgency;
+ms.short_description = "Incident created from " + current.number; 
+
+var incidentSysId = ms.insert(); 
+
+if (incidentSysId) {
+    gs.addInfoMessage("Incident " + ms.number + " has been created!"); 
+} else {
+    gs.addErrorMessage("Failed to create the incident.");
+}
+
+
+action.setReturnURL(current.getLink());
