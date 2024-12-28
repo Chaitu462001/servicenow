@@ -1,0 +1,43 @@
+var categoryValue = current.getValue('category');
+var subCategoryValue = current.getValue('subcategory');
+var callerValue = current.getValue('caller_id');
+var impactValue = current.getValue('impact');
+var urgencyValue = current.getValue('urgency');
+var shortDescValue = current.getValue('short_description');
+
+        gs.log("Parent Record Values - Category: " + categoryValue +
+            ", Subcategory: " + subCategoryValue + ", Caller: " + callerValue +
+            ", Impact: " + impactValue +
+            ", Urgency: " + urgencyValue + " , Short Description: " + shortDescValue);
+
+        var ms = new GlideRecord('u_surya_tables'); ms.initialize();
+
+        ms.setValue('u_category', categoryValue); ms.setValue('u_sub_category', subCategoryValue); ms.setValue('u_caller', callerValue); ms.setValue('u_impact', impactValue); ms.setValue('u_urgency', urgencyValue); ms.setValue('u_short_description', shortDescValue); ms.short_description = "Table created from " + current.number;
+
+        ms.insert();
+
+        current.setValue('u_incident', ms.sys_id); current.update();
+
+        gs.log("Child Record Values After Insert - Category: " + ms.getValue('u_category') +
+            ", Subcategory: " + ms.getValue('u_sub_category'));
+
+        if (ms.sys_id) {
+            gs.log("Record inserted with Sys ID: " + ms.sys_id);
+            var recordIdentifier = ms.number ? ms.number : ms.getUniqueValue();
+            gs.addInfoMessage("Record " + recordIdentifier + " has been created!");
+        } else {
+            gs.addErrorMessage("Failed to create the record.");
+            gs.log("Record creation failed.");
+        }
+
+        var insertedRecord = new GlideRecord('u_surya_tables');
+        if (insertedRecord.get(ms.sys_id)) {
+            gs.log("Inserted Record Values - Category: " + insertedRecord.getValue('u_category') +
+                ", Subcategory: " + insertedRecord.getValue('u_sub_category') +
+                ", Caller: " + insertedRecord.getValue('u_caller') +
+                ", Impact: " + insertedRecord.getValue('u_impact') +
+                ", Urgency: " + insertedRecord.getValue('u_urgency') + insertedRecord.getValue('u_short_description'));
+        } else {
+            gs.log("Failed to fetch inserted record for validation.");
+        }
+action.setReturnURL(current.getLink());		
