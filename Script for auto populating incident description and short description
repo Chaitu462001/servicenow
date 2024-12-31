@@ -1,3 +1,4 @@
+YOU CHANGE THE FIELD VALUES AND USE THIS SCRIPT FOR MULTIPLE CASES
 SCRIPT INCLUDE :
 var ChgReqAjax = Class.create();
 ChgReqAjax.prototype = Object.extendsObject(AbstractAjaxProcessor, {
