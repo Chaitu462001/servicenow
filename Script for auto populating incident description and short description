@@ -1,0 +1,35 @@
+SCRIPT INCLUDE :
+var ChgReqAjax = Class.create();
+ChgReqAjax.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+    getChangeRequestDetails: function() {
+        var ms = new GlideRecord('rfc');
+        ms.addQuery('sys_id', this.getParameter('sysparam_chg'));
+        ms.query();
+        var msc = {};
+        if (ms.next()) {
+            msc.sd = ms.getValue('u_chg_short_description');
+            msc.desc = ms.getValue('u_chg_description');
+        }
+        return JSON.stringify(msc);
+    },
+    type: 'ChgReqAjax'
+});
+
+ONCHANGE CLIENT SCRIPT : 
+function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+    if (isLoading || newValue === '') {
+        g_form.clearValue('u_chg_short_description');
+        g_form.clearValue('u_chg_description');
+        return;
+    }
+
+    var hey = new GlideAjax('ChgReqAjax');
+    hey.addParam('sysparam_name', 'getChangeRequestDetails');
+    hey.addParam('sysparam_chg', newValue); // Pass the correct sys_id of the change request
+    hey.getXMLAnswer(function(response) {
+        var answer = response.responseXML.documentElement.getAttribute("answer");
+        var chai = JSON.parse(answer);
+        g_form.setValue('u_chg_short_description', chai.sd);
+        g_form.setValue('u_chg_description', chai.desc);
+    });
+} 
