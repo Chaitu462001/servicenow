@@ -1,34 +1,29 @@
 SCRIPT INCLUDE : 
-var CallerValidation = Class.create();
-CallerValidation.prototype = Object.extendsObject(AbstractAjaxProcessor, {
-    isVipAndContractor: function() {
-        var callerId = this.getParameter('sysparam_caller_id');
-        var gr = new GlideRecord('sys_user');
-        if (gr.get(callerId)) {
-            if (gr.getValue('vip') === 'true' && gr.getValue('u_is_contractor') === 'true') {
-                return 'true';
-            }
+var FormValidation = Class.create();
+FormValidation.prototype = {
+    initialize: function() {},
+
+    validateForm: function(vip, contractor) {
+        if (vip === true && contractor === true) {
+            return true;
+        } else {
+            return false;
         }
-        return 'false';
     },
 
-    type: 'CallerValidation'
-});
+    type: 'FormValidation'
+};
 
 CLIENT SCRIPT :
-function onChange(control, oldValue, newValue, isLoading, isTemplate) {
-    if (isLoading || newValue === '') {
-        return;
-    }
+function onSubmit() {
+    var vipField = g_form.getValue('vip');
+    var contractorField = g_form.getValue('contractor');
 
-    var ga = new GlideAjax('CallerValidation');
-    ga.addParam('sysparam_name', 'isVipAndContractor');
-    ga.addParam('sysparam_caller_id', newValue);
-    ga.getXMLAnswer(function(response) {
-        if (response === 'true') {
-            g_form.submit();
-        } else {
-            g_form.addInfoMessage('Caller is not a VIP and Contractor. Form will not be submitted.');
-        }
-    });
+    if (vipField === 'true' && contractorField === 'true') {
+        // Allow form submission
+        return true;
+    } else {
+        g_form.addErrorMessage("Both VIP and Contractor must be selected as true to submit this form.");
+        return false;
+    }
 }
