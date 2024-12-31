@@ -16,14 +16,26 @@ FormValidation.prototype = {
 
 CLIENT SCRIPT :
 function onSubmit() {
-    var vipField = g_form.getValue('vip');
-    var contractorField = g_form.getValue('contractor');
-
-    if (vipField === 'true' && contractorField === 'true') {
-        // Allow form submission
-        return true;
-    } else {
-        g_form.addErrorMessage("Both VIP and Contractor must be selected as true to submit this form.");
+    var vip = g_form.getValue('vip');
+    var contractor = g_form.getValue('contractor');
+    
+    if (vip !== 'true' || contractor !== 'true') {
+        var ga = new GlideAjax('FormValidationHelper');
+        ga.addParam('sysparm_name', 'validateFields');
+        ga.addParam('sysparm_vip', vip);
+        ga.addParam('sysparm_contractor', contractor);
+        
+        ga.getXMLAnswer(function(response) {
+            var result = response.responseXML.documentElement.getAttribute('answer');
+            if (result === 'false') {
+                g_form.addErrorMessage('Form cannot be submitted unless both VIP and Contractor are selected as true.');
+                g_form.submit(false); 
+            } else {
+                g_form.submit(true);
+            }
+        });
+        
         return false;
     }
+    return true;
 }
