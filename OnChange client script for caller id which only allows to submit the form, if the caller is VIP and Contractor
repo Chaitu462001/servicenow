@@ -1,0 +1,33 @@
+SCRIPT INCLUDE : 
+var CallerCheck = Class.create();
+CallerCheck.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+
+    isCallerVIPAndContractor: function() {
+        var callerSysId = this.getParameter('sysparam_caller_id');
+        var gr = new GlideRecord('sys_user');
+        if (gr.get(callerSysId)) {
+            var isVIP = gr.getValue('vip') == 'true';
+            var isContractor = gr.getValue('title') == 'Contractor';
+            return isVIP && isContractor;
+        }
+        return false;
+    },
+
+    type: 'CallerCheck'
+});
+
+CLIENT SCRIPT :
+function onSubmit() {
+    var callerId = g_form.getValue('caller_id');
+    var ga = new GlideAjax('CallerCheck');
+    ga.addParam('sysparam_name', 'isCallerVIPAndContractor');
+    ga.addParam('sysparam_caller_id', callerId);
+    var result = ga.getXMLWait();
+    var answer = result.documentElement.getAttribute("answer") == 'true';
+
+    if (!answer) {
+        alert('Submission is allowed only for VIP Contractors.');
+        return false;
+    }
+    return true;
+}
