@@ -5,7 +5,6 @@ CallerValidation.prototype = Object.extendsObject(AbstractAjaxProcessor, {
         var callerId = this.getParameter('sysparam_caller_id');
         var gr = new GlideRecord('sys_user');
         if (gr.get(callerId)) {
-            // Check if the caller is a VIP and a Contractor
             if (gr.getValue('vip') === 'true' && gr.getValue('u_is_contractor') === 'true') {
                 return 'true';
             }
@@ -27,10 +26,8 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
     ga.addParam('sysparam_caller_id', newValue);
     ga.getXMLAnswer(function(response) {
         if (response === 'true') {
-            // Automatically submit the form if the caller is both a VIP and Contractor
             g_form.submit();
         } else {
-            // Optionally, you can show a message if the caller is not a VIP and Contractor
             g_form.addInfoMessage('Caller is not a VIP and Contractor. Form will not be submitted.');
         }
     });
