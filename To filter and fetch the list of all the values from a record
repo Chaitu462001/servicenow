@@ -1,0 +1,14 @@
+# To get the list of a single field value 
+var chay = new GlideRecord('sys_user'); 
+chay.query();
+while (chay.next()) {
+    gs.print(chay.getValue('email'));
+}
+
+# To get the list of multiple values
+var chay = new GlideRecord('sys_user');
+chay.query();
+while (chay.next()) {
+    gs.print(chay.getValue('email')) + gs.print(chay.getValue('location')) + gs.print(chay.getValue('department'));
+
+}
