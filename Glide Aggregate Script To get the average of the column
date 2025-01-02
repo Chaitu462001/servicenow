@@ -1,0 +1,8 @@
+var ms = new GlideAggregate('incident');
+ms.addAggregate('AVG', 'column_name');
+ms.setGroup(false);
+ms.query();
+
+while (ms.next()) {
+    gs.print(ms.getAggregate('AVG', 'column_name'));
+}
