@@ -1,0 +1,10 @@
+var ms = new GlideAggregate('incident');
+ms.addAggregate('MIN', 'column_name');
+ms.addAggregate('MAX', 'column_name');
+ms.setGroup(false);
+ms.query();
+
+while (ms.next()) {
+    gs.print(ms.getAggregate('MIN', 'column_name'));
+    gs.print(ms.getAggregate('MAX', 'column_name'));
+}
