@@ -1,0 +1,23 @@
+var ms = new GlideAggregate('incident');
+ms.addAggregate('COUNT');
+ms.groupBy('number');
+ms.query();
+
+while (ms.next()) {
+    var count = ms.getAggregate('COUNT');
+    var number = ms.getValue('number');
+
+    if (count > 1) {
+        var msc = new GlideRecord('incident');
+        msc.addQuery('number', number);
+        msc.orderBy('sys_created_on');
+        msc.query();
+
+        var firstRecord = true;
+        if (firstRecord) {
+            firstRecord = false;
+            continue;
+        }
+        msc.deleteRecord();
+    }
+}
