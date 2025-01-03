@@ -1,0 +1,33 @@
+SCRIPT INCLUDE :
+var plannedDateTime = Class.create();
+plannedDateTime.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+    plannedStartDateValidation: function() {
+        var plannedDate = new GlideDateTime(this.getParameter('sysparam_pstart'));
+        var today = new GlideDateTime();
+
+        if (plannedDate.compareTo(today) > plannedDate) {
+            return 'valid';
+        } else {
+            return 'past';
+        }
+    },
+
+    type: 'plannedDateTime'
+});
+
+CLIENT SCRIPT :
+function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+    if (isLoading || newValue === '') {
+        return;
+    }
+
+    var ga = new GlideAjax('plannedDateTime');
+    ga.addParam('sysparm_name', 'plannedStartDateValidation');
+    ga.addParam('sysparam_pstart', newValue);
+    ga.getXMLAnswer(function(response) {
+        if (response === 'past') { 
+            g_form.clearValue('u_glide_date_time');
+            g_form.showFieldMsg('u_glide_date_time', 'The Planned Date should be greater than the current date.', 'error');
+        }
+    });
+}
