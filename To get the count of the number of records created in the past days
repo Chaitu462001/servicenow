@@ -1,0 +1,8 @@
+var ms = new GlideAggregate('incident');
+ms.addQuery('sys_created_by',gs.getUserName());
+ms.addQuery('sys_created_on',gs.daysAgoStart(15));
+ms.addAggregate('COUNT');
+ms.query();
+while(ms.next()){
+	gs.print(ms.getAggregate('COUNT'));
+}
