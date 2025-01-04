@@ -26,8 +26,8 @@ function onChange(control, oldValue, newValue, isLoading, isTemplate) {
     ga.addParam('sysparam_pstart', newValue);
     ga.getXMLAnswer(function(response) {
         if (response === 'past') { 
-            g_form.clearValue('u_glide_date_time');
-            g_form.showFieldMsg('u_glide_date_time', 'The Planned Date should be greater than the current date.', 'error');
+            g_form.clearValue('u_plan_date_time');
+            g_form.showFieldMsg('u_plan_date_time', 'The Planned Date should be greater than the current date.', 'error');
         }
     });
 }
